@@ -12,14 +12,20 @@ import java.time.Duration
 class UpdatesProcessingApplicationTests {
 
     @Autowired
-    lateinit var accountUpdater3: AccountUpdater3
+    lateinit var accountUpdater1: AccountUpdater1
 
     @Autowired
     lateinit var accountUpdater2: AccountUpdater2
 
     @Autowired
-    lateinit var accountUpdater1: AccountUpdater1
+    lateinit var accountUpdater3: AccountUpdater3
 
+
+    /*
+    The most naive implementation of the account updater,
+    which processes each update individually.
+    We expect that all the updates will be processed in order.
+     */
     @Test
     fun `process with updater1`() {
         StepVerifier.create(
@@ -32,6 +38,12 @@ class UpdatesProcessingApplicationTests {
             .verifyComplete()
     }
 
+    /*
+    The second implementation of the account updater, more efficient than the first one.
+    It is batches the updates to batches of size 10 or after 10 seconds.
+    It should still update the updates in order.
+    To test that we need to use virtual time, otherwise the test will take 10 seconds to run.
+     */
     @Test
     fun `process with updater2`() {
         StepVerifier.withVirtualTime {
@@ -49,6 +61,14 @@ class UpdatesProcessingApplicationTests {
             .verifyComplete()
     }
 
+    /*
+    The third implementation of the account updater, more efficient than the second one.
+    Each batch contains updates for a single service, so we can parallel the process of the batches
+    and use cache per service to improve each batch processing.
+    For testing that we set serviceId to be 0 for the even updates and 1 for the odd updates.
+    We expect 2 batches of 4 updates each, each batch should contain updates of only one service.
+    The Ack in a batch should be in order.
+     */
     @Test
     fun `process with updater3`() {
         StepVerifier.withVirtualTime {

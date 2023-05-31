@@ -20,3 +20,31 @@ mvn -Pnative spring-boot:build-image
 ```bash
 mvn -Pnative native:compile
 ```
+
+
+### Publishe subscriber and Subscription
+
+```java
+public interface Publisher<T> {
+    void subscribe(Subscriber<? super T> s);
+}
+
+public interface Subscriber<T> {
+    void onSubscribe(Subscription s);
+    void onNext(T t);
+    void onError(Throwable t);
+    void onComplete();
+}
+
+public interface Subscription {
+    void request(long n);
+    void cancel();
+}
+
+```
+Reactor expose 2 primitive types of Publisher
+ * Mono - publish 0 or 1 element
+ * Flux - publish 0 or more elements
+
+This by using the subscription, the consumer can control the arriving elements.
+
