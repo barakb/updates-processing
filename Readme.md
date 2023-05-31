@@ -5,7 +5,7 @@
 # Updates Processing
 
 A simple application that process updates from a "Kafka" topic, use to demonstrate 
-usage of reactor Flux and its unit testing, Spring boot and GitHub actions.
+usage of [reactor](https://projectreactor.io/docs/core/release/reference/) Flux and its unit testing, Spring boot and GitHub actions.
 
 ### Build
 
