@@ -10,7 +10,7 @@ class AccountUpdater2(private val updatesProcessor: UpdatesProcessor) {
         return updates
             .bufferTimeout(10, Duration.ofSeconds(10))
             .flatMapSequential { batch ->
-                Flux.just(updatesProcessor.process(batch))
+                updatesProcessor.process(batch)
             }
     }
 }

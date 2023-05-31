@@ -14,7 +14,7 @@ class AccountUpdater3(private val updatesProcessor: UpdatesProcessor) {
                 group.bufferTimeout(10, Duration.ofSeconds(10))
                     .flatMapSequential { batch ->
                         logger.info("processing batch: service=${batch[0].serviceId}, size=${batch.size}")
-                        Flux.just(updatesProcessor.process(batch))
+                        updatesProcessor.process(batch)
                     }
             }
     }

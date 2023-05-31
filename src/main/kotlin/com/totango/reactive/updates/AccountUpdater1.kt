@@ -2,11 +2,10 @@ package com.totango.reactive.updates
 
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
-import java.time.Duration
 
 @Component
 class AccountUpdater1(private val updatesProcessor: UpdatesProcessor) {
     fun process(updates: Flux<Update>): Flux<List<UpdateAck>> {
-        return updates.map{ updatesProcessor.process(listOf(it))}
+        return updates.flatMapSequential{ updatesProcessor.process(listOf(it))}
     }
 }
