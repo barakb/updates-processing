@@ -31,4 +31,4 @@ jobs:
       - name: Build maven artifacts
         run: |
           echo "Building maven for $IMAGE_TAG"
-           ./mvnw -B -Pnative test -T C2 spring-boot:build-image
+           ./mvnw -B -Pnative test -T 2C spring-boot:build-image
