@@ -43,8 +43,8 @@ public interface Subscription {
 
 ```
 Reactor expose 2 primitive types of Publisher
- * Mono - publish 0 or 1 element
- * Flux - publish 0 or more elements
+ * *Mono* - publish 0 or 1 element
+ * *Flux* - publish 0 or more elements
 
-This by using the subscription, the consumer can control the arriving elements.
+The subscription object allow the consumer to adjust the control of the arriving elements.
 
