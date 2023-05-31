@@ -1,0 +1,34 @@
+name: build
+
+on:
+  pull_request:
+    branches:
+      - master
+      - 'release/v*'
+  push:
+    branches:
+      - master
+      - 'release/v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: graalvm/setup-graalvm@v1
+        with:
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+      - name: compute short sha and current time
+        id: vars
+        run: |
+          echo "git_sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "timestamp=$(date +%s)" >> $GITHUB_OUTPUT
+      - name: Build maven artifacts
+        run: |
+          echo "Building maven for $IMAGE_TAG"
+           ./mvnw -B -Pnative test -TC2 spring-boot:build-image
