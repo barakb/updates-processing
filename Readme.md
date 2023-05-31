@@ -9,7 +9,14 @@ usage of reactor Flux and its unit testing, Spring boot and GitHub actions.
 
 ### Build
 
+##### A native container image
+
 ```bash
 mvn -Pnative spring-boot:build-image
+```
+
+##### A native image
+
+```bash
 mvn -Pnative native:compile
 ```
